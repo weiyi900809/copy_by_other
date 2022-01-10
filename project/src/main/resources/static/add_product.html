@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Langer Shop</title>
+</head>
+<style>
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-size: 62.5%;
+  height: 100%;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  html, body {
+    font-size: 50%;
+  }
+}
+
+
+.cont {
+  position: relative;
+  height: 100%;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg");
+  background-size: cover;
+  overflow: auto;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.demo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -15rem;
+  margin-top: -26.5rem;
+  width: 30rem;
+  height: 53rem;
+  overflow: hidden;
+}
+
+*{
+  margin:0;
+  padding:0;
+}
+
+body{
+
+  background-color:#f0f0f0;
+  font-family:helvetica;
+}
+
+
+#bg{
+  position:relative;
+  top:20px;
+  height:900px;
+  width:800px;
+  background:url('https://i.imgur.com/3eP9Z4O.png') center no-repeat;
+  background-size:cover;
+  margin-left:auto;
+  margin-right:auto;
+  border:#fff 15px solid;
+}
+
+.module{
+  position:relative;
+  top:15%;
+  height:70%;
+  width:450px;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius:5px;
+  background:RGBA(255,255,255,1);
+
+  -webkit-box-shadow:  0px 0px 15px 0px rgba(0, 0, 0, .45);
+  box-shadow:  0px 0px 15px 0px rgba(0, 0, 0, .45);
+
+}
+
+.module ul{
+  list-style-type:none;
+  margin:0;
+}
+
+.tab{
+  float:left;
+  height:60px;
+  width:25%;
+  padding-top:20px;
+  box-sizing:border-box;
+  background:#eeeeee;
+  text-align:center;
+  cursor:pointer;
+  transition:background .4s;
+}
+
+.tab:first-child{
+  -webkit-border-radius: 5px 0px 0px 0px;
+  border-radius: 5px 0px 0px 0px;
+}
+
+.tab:last-child{
+  -webkit-border-radius: 0px 5px 0px 0px;
+  border-radius: 0px 5px 0px 0px;
+}
+
+.tab:hover{
+  background-color:rgba(0,0,0,.1);
+}
+
+.activeTab{
+  background:#fff;
+}
+
+.activeTab .icon{
+  opacity:1;
+}
+
+.icon{
+  height:24px;
+  width:24px;
+  opacity:.2;
+}
+
+.form{
+  float:left;
+  height:86%;
+  width:100%;
+  box-sizing:border-box;
+  padding:40px;
+}
+
+.textbox{
+  height:50px;
+  width:100%;
+  border-radius:3px;
+  border:rgba(0,0,0,.3) 2px solid;
+  box-sizing:border-box;
+  padding:10px;
+  margin-bottom:30px;
+}
+
+.textbox:focus{
+  outline:none;
+   border:rgba(24,149,215,1) 2px solid;
+   color:rgba(24,149,215,1);
+}
+
+.button{
+  height:50px;
+  width:100%;
+  border-radius:3px;
+  border:rgba(0,0,0,.3) 0px solid;
+  box-sizing:border-box;
+  padding:10px;
+  margin-bottom:30px;
+  background:#90c843;
+  color:#FFF;
+  font-weight:bold;
+  font-size: 12pt;
+  transition:background .4s;
+  cursor:pointer;
+}
+
+.button:hover{
+  background:#80b438;
+
+}
+</style>
+<body>
+<span id="show"></span>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="https://img.icons8.com/external-prettycons-flat-prettycons/28/000000/external-shopping-cart-shopping-prettycons-flat-prettycons-1.png"/>&ensp;Langer Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a onclick="tohome()" class="btn" aria-current="page" style="cursor:pointer">首頁</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        商品管理
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item link" onclick="insertproduct()" style="cursor:pointer">新增商品</a></li>
+                        <li><a class="dropdown-item link" onclick="updateproduct()" style="cursor:pointer">修改商品</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav mb-2 mb-lg-0 d-
+            flex">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">登出</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        會員中心
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="nav-link" onclick="tosell()" style="cursor:pointer">商城</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!--<form class="d-flex">
+                <input class="form-control " type="text" placeholder="商品名稱" aria-label="product name" aria-describedby="searchProduct" id="productKeyword">
+                <button class="btn btn-outline-success" type="button" id="searchProduct">Search</button>
+            </form>-->
+        </div>
+    </div>
+</nav>
+<div class="cont">
+    <div id="bg">
+        <div class="module">
+            <ul>
+                <li class="tab activeTab"><img src="https://i.imgur.com/Fk1Urva.png" alt="" class="icon"/></li>
+            </ul>
+
+            <form name="Form1" class="form">
+                <input onkeydown=KeyDown() type="text" id="pname" name="pname" placeholder="輸入商品名稱" class="textbox" />
+                <input onkeydown=KeyDown() type="number" id="pinstock" name="pinstock" placeholder="輸入商品庫存量" class="textbox" />
+                <input onkeydown=KeyDown() type="number" id="pprice" name="pprice" placeholder="輸入商品價錢" class="textbox" />
+                <input onkeydown=KeyDown() type="number" id="pquantity" name="pquantity" placeholder="輸入商品最低購買量" class="textbox" />
+                <input onkeydown=KeyDown() type="url" id="ppicture" name="ppicture" size="60" placeholder="輸入商品URL" class="textbox" />
+                <input name="btnsubmit" type="button" value="Submit"  id="addProduct" onclick="toadd_product()" class="button" />
+                <!-- <label>商品名稱:  </label><br>
+        <input type="text" id="pname" name="pname" placeholder="輸入商品名稱"><br><br>
+        <label>商品庫存量:  </label><br>
+        <input type="number" id="pinstock" name="pinstock" placeholder="輸入商品庫存量"><br><br>
+        <label>商品價錢:  </label><br>
+        <input type="number" id="pprice" name="pprice" placeholder="輸入商品價錢"><br><br>
+        <label>商品最低入手量:  </label><br>
+        <input type="number" id="pquantity" name="pquantity" placeholder="輸入商品最低購買量"><br><br>
+        <label>商品圖片:  </label><br>
+        <input type="url" id="ppicture" name="ppicture" size="60" placeholder="輸入商品URL"><br><br>-->
+            </form>
+        </div>
+    </div>
+</div>
+<!--<h3 class="mt-3">新增商品</h3>
+<div class="container">
+
+    <form>
+        <label>商品名稱:  </label><br>
+        <input type="text" id="pname" name="pname" placeholder="輸入商品名稱"><br><br>
+        <label>商品庫存量:  </label><br>
+        <input type="number" id="pinstock" name="pinstock" placeholder="輸入商品庫存量"><br><br>
+        <label>商品價錢:  </label><br>
+        <input type="number" id="pprice" name="pprice" placeholder="輸入商品價錢"><br><br>
+        <label>商品最低入手量:  </label><br>
+        <input type="number" id="pquantity" name="pquantity" placeholder="輸入商品最低購買量"><br><br>
+        <label>商品圖片:  </label><br>
+        <input type="url" id="ppicture" name="ppicture" size="60" placeholder="輸入商品URL"><br><br>
+    </form>
+
+    <button class="btn btn-outline-success" type="button" id="addProduct" onclick="toadd_product()">Submit</button>
+    <button class="btn btn-outline-success" type="button" onclick="history.go(-1)" value="返回上一頁">返回上一頁</button>-->
+
+
+   <!-- <div class="mt-3 row" id="productList">
+    </div>
+</div>-->
+<!-- Optional JavaScript; choose one of the two! -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!-- 若需相容 IE11，要加載 Promise Polyfill-->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<!--Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+
+
+<script>
+function KeyDown()
+{
+if (event.keyCode == 13)
+{
+event.returnValue=false;
+event.cancel = true;
+Form1.btnsubmit.click();
+}
+}
+
+$(document).ready(function() {
+
+  var animating = false,
+      submitPhase1 = 1100,
+      submitPhase2 = 400,
+      logoutPhase1 = 800,
+      $login = $(".login"),
+      $app = $(".app");
+
+  function ripple(elem, e) {
+    $(".ripple").remove();
+    var elTop = elem.offset().top,
+        elLeft = elem.offset().left,
+        x = e.pageX - elLeft,
+        y = e.pageY - elTop;
+    var $ripple = $("<div class='ripple'></div>");
+    $ripple.css({top: y, left: x});
+    elem.append($ripple);
+  };
+
+
+
+  $(document).on("click", ".login__submit", function(e) {
+    if (animating) return;
+    animating = true;
+    var that = this;
+    ripple($(that), e);
+    $(that).addClass("processing");
+    setTimeout(function() {
+      $(that).addClass("success");
+      setTimeout(function() {
+        $app.show();
+        $app.css("top");
+        $app.addClass("active");
+      }, submitPhase2 - 70);
+      setTimeout(function() {
+        $login.hide();
+        $login.addClass("inactive");
+        animating = false;
+        $(that).removeClass("success processing");
+      }, submitPhase2);
+    }, submitPhase1);
+  });
+
+  $(document).on("click", ".app__logout", function(e) {
+    if (animating) return;
+    $(".ripple").remove();
+    animating = true;
+    var that = this;
+    $(that).addClass("clicked");
+    setTimeout(function() {
+      $app.removeClass("active");
+      $login.show();
+      $login.css("top");
+      $login.removeClass("inactive");
+    }, logoutPhase1 - 120);
+    setTimeout(function() {
+      $app.hide();
+      animating = false;
+      $(that).removeClass("clicked");
+    }, logoutPhase1);
+  });
+
+});
+
+function tosell(){
+    var getval = result;
+    window.location.href="index1.html?valus"+getval;
+    //console.log(getval);
+    }
+
+ $(function(){
+    $("#show").html(oneValues());
+    })
+
+    var result;
+    var account_str;
+    function oneValues(){
+    var url=window.location.search;
+    if(url.indexOf("?")!=-1)
+    {
+        result = url.substr(url.indexOf("=")+7);
+        account_str = result.split('&');
+        //console.log(account_str[0]);
+        //alert(result);
+    }
+        //return result;
+    }
+    function toadd_product(){
+    var getval = result;
+     Swal.fire({
+                  title: '新增成功!',
+                  icon: 'success',
+                  confirmButtonColor: '#3085d6',
+                }).then((result) => {
+                if(result.isConfirmed) {
+                       window.location.href="add_product.html?valus"+getval;
+                   }
+                })
+    //console.log(getval);
+    }
+
+    function tohome(){
+    var getval = result;
+    window.location.href="index2.html?valus"+getval;
+    //console.log(getval);
+    }
+
+    //console.log(result);
+    function tomember(){
+    var getval = result;
+    window.location.href="SellerMemberCenter.html?valus"+getval;
+    //console.log(getval);
+    }
+
+    function insertproduct(){
+    var getval = result;
+    window.location.href="add_product.html?valus"+getval;
+    //console.log(getval);
+    }
+
+    function updateproduct(){
+    var getval = result;
+    window.location.href="update_product.html?valus"+getval;
+    //console.log(getval);
+    }
+
+      $('#addProduct').click(function() {
+            //console.log(name);
+            add();
+    });
+
+      function add() {
+      // Using the core $.ajax() method
+      $.ajax({
+          // The URL for the request
+          url: "add",
+
+          // Whether this is a POST or GET request
+          type: "GET",
+
+            data :{
+             name : $('#pname').val(),
+             stock : $('#pinstock').val(),
+             price :　$('#pprice').val(),
+             quantity : $('#pquantity').val(),
+             picture : $('#ppicture').val(),
+             account : account_str[0],
+          },
+          // The type of data we expect back
+          dataType : "text",
+      })
+        // Code to run if the request succeeds (is done);
+        // The response is passed to the function
+        .done(function( text ) {
+          console.log("success");
+          var getval = result;
+     Swal.fire({
+                  title: '新增成功!',
+                  icon: 'success',
+                  confirmButtonColor: '#3085d6',
+                }).then((result) => {
+                if(result.isConfirmed) {
+                       window.location.href="add_product.html?valus"+getval;
+                   }
+                })
+        })
+        // Code to run if the request fails; the raw request and
+        // status codes are passed to the function
+        .fail(function( xhr, status, errorThrown ) {
+          console.log( "Sorry, there was a problem!" );
+          console.log( "Error: " + errorThrown );
+          console.log( "Status: " + status );
+          console.dir( xhr );
+        })
+        // Code to run regardless of success or failure;
+        .always(function( xhr, status ) {
+          console.log( "The request is complete!" );
+        });
+    }
+</script>
+</body>
+</html>

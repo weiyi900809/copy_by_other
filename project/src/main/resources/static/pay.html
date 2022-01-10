@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Langer Shop</title>
+    <style>
+        *,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+body {
+	font-family: sans-serif;
+	background: #f6f9fa;
+}
+
+h1 {
+	color: #ccc;
+	text-align: center;
+}
+h4.payment-title {
+    text-align: left;
+    padding: 10px 0px 30px 30px;
+    font-weight: 500;
+    color: #5e6977;
+}
+a {
+  color: #ccc;
+  text-decoration: none;
+  outline: none;
+}
+
+.tab_container {
+    width: 900px;
+    margin: 50px auto;
+    position: relative;
+    border: 1px solid #eee;
+    border-radius: 7px;
+  background:#fff;
+}
+
+input, section {
+  clear: both;
+  padding-top: 10px;
+  display: none;
+}
+
+label {
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+  float: left;
+  padding: 20px 14px;
+  color: #ccc;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  background: #fff;
+  margin-bottom: 2px;
+      border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+  border-bottom:2px solid #eee;
+
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4 {
+  display: block;
+  padding: 20px 0 0 0;
+  color: #999;
+}
+
+.tab_container .tab-content h3  {
+  text-align: center;
+}
+
+.tab_container [id^="tab"]:checked + label {
+  background: #fff;
+  border-bottom:2px solid #358ed7;
+  color: #358ed7;
+}
+
+.tab_container [id^="tab"]:checked + label>span.numberCircle {
+  border: 2px solid #358ed7;
+  border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 3px 5px;
+    text-align: center;
+    font-size: 10px;
+    margin: 3px 8px
+}
+
+label:hover {
+background-color:#eee;
+  border-radius:0px;
+}
+
+.numberCircle {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 3px 5px;
+    border: 2px solid #ccc;
+    text-align: center;
+    font-size: 10px;
+    margin: 3px 8px
+}
+
+
+.row-payment-method {
+  margin: 0px 0px 0px 0px;
+  padding: 22px 0px 11px 0px;
+  text-align: left;
+  display: table;
+}
+.payment-row {
+  background-color: #f5f6fa;
+  padding-left: 30px;
+  padding-right: 30px;
+      width: 100%;
+}
+.payment-row-last {
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 100%;
+}
+
+.payment-padding-right {
+
+}
+.select-icon {
+  display: table-cell;
+  vertical-align: top;
+  text-align: left;
+  padding-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  width: 24px;
+  height: 24px;
+}
+
+.select-txt {
+  display: table-cell;
+  vertical-align: middle;
+  word-wrap: break-word;
+  height: 60px;
+  text-align: left;
+  padding-left: 15px;
+  font-size: 12pt;
+}
+.select-logo {
+  padding-right: 0px;
+  vertical-align: top;
+      right: 35px;
+    position: absolute;
+}
+.select-logo-sub {
+  display: table-cell;
+  vertical-align: middle;
+}
+.logo-spacer {
+  padding-right: 13px;
+}
+.pymt-type-name {
+  font-weight: 500;
+  font-size: 12pt;
+  padding-bottom: 8px;
+  color: #5a6977;
+}
+.pymt-type-desc {
+  padding-bottom: 22px;
+  width:70%;
+    font-size:14px;
+}
+.hr {
+  border-bottom: 1px solid #ebf0f5;
+  padding-bottom: 5px;
+}
+.form-cc {
+  display: table;
+  width: 100%;
+  text-align: left;
+  padding: 0px 0px 30px 30px;
+}
+.row-cc {
+  display: table;
+  width: 100%;
+  padding-bottom: 7px;
+}
+.cc-txt {
+  border-color: #e1e8ee;
+  width: 100%;
+}
+.input {
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 2px;
+  height: 38px;
+  padding-left: 15px;
+  font-weight: 600;
+  font-size: 11pt;
+  color: #5e6977;
+
+}
+input[type="text"] {
+   display: initial;
+  padding:15px
+}
+.text-validated {
+  border-color: #7DC855;
+  background-image: url("https://www.dropbox.com/s/1mve74fafiwsae1/icon-tick.png?raw=1");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+}
+.cc-ddl {
+  border-color: #f0f4f7;
+  background-color: #f0f4f7;
+      width: 100px;
+    margin-right: 10px;
+
+
+}
+.cc-title {
+  font-size: 10.5pt;
+  padding-bottom: 8px;
+}
+.cc-field {
+  padding-top: 15px;
+  padding-right: 30px;
+  display: table-cell;
+}
+.button-master-container, .button-master-container:hover {
+  display: table;
+  width: 100%;
+  border-top: 1px solid #e1e8ee;
+  height: 60px;
+  vertical-align: bottom;
+}
+.button-container {
+  width: 50%;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+a, a:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+.button-container:hover {
+background-color:#eee;
+  cursor:pointer;
+}
+.button-finish {
+  border-left: 1px solid #e1e8ee;
+  color: #7DC855;
+  font-weight: 500;
+  font-size: 12pt;
+  background-image: url("https://www.dropbox.com/s/10d95otbo48r0hh/icon-next.png?raw=1");
+  background-repeat: no-repeat;
+  background-position: right 50px center;
+}
+.cvv-tooltip-img {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 17px;
+}
+input[id^="radio"]{
+   display:none;
+}
+
+input[id^="radio"] + label
+{
+    background-image:url("https://www.dropbox.com/s/mnwbybfl4pnzoi4/radio-inactive.png?raw=1");
+    height: 26px;
+    width: 24px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    cursor:pointer;
+    border-radius: 50%;
+}
+
+input[id^="radio"]:checked + label
+{
+    background-image:url("https://www.dropbox.com/s/8634yi8i1s7fx7w/radio-active.png?raw=1");
+  height: 26px;
+    width: 24px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    cursor:pointer;
+}
+p.credit {
+  text-align:center;
+  color: #ccc;
+}
+    </style>
+</head>
+<body>
+<span id="show"></span>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="https://img.icons8.com/external-prettycons-flat-prettycons/28/000000/external-shopping-cart-shopping-prettycons-flat-prettycons-1.png"/>&ensp;Langer Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a onclick="tohome()" class="nav-link active" aria-current="page" style="cursor:pointer">首頁</a>
+                </li>
+
+            </ul>
+
+
+            <ul class="navbar-nav mb-2 mb-lg-0 d-flex">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">登出</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        會員中心
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="nav-link" onclick="tomember()" style="cursor:pointer">修改密碼</a></li>
+                        <li><a class="nav-link" onclick="toOrder()" style="cursor:pointer">查看訂單</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a onclick="tocar()" class="nav-link"  style="cursor:pointer">購物車</a>
+                </li>
+            </ul>
+
+            <!--<form class="d-flex">
+                <input class="form-control " type="text" placeholder="商品名稱" aria-label="product name" aria-describedby="searchProduct" id="productKeyword">
+                <button class="btn btn-outline-success" type="button" id="searchProduct">Search</button>
+            </form>-->
+        </div>
+    </div>
+</nav>
+<h1>結帳</h1>
+<p class="credit">完成以下步驟完成結帳</p>
+<div class="tab_container">
+
+    <input id="tab3" type="radio" name="tabs"   checked/>
+    <label for="tab3"><span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;Step 1&ensp;請選擇運送方式&ensp;&ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></label>
+
+    <input id="tab4" type="radio"  name="tabs" />
+    <label for="tab4"><span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;Step 2&ensp;請選擇付款方式&ensp;&ensp;&emsp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></label>
+
+    <section id="content3" class="tab-content">
+        <h3>選擇您的運送方式</h3>
+        <div class="pymt-radio">
+
+
+            <div class="row-payment-method payment-row">
+                <div class="select-icon">
+                    <input type="radio" id="radio" name="radios" value="超商自取">
+                    <label for="radio"></label>
+                </div>
+                <div class="select-txt">
+                    <p class="pymt-type-name">超商自取</p>
+                    <p class="pymt-type-desc">購買者自行到超商取貨</p>
+                </div>
+                <div class="select-logo">
+                    <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/000000/external-7-eleven-is-your-go-to-convenience-store-for-food-snacks-hot-and-cold-beverages-food-color-tal-revivo.png" alt="超商自取"/>
+                </div>
+            </div>
+            <div class="form-cc">
+                <div class="row-cc">
+                    <div class="cc-field">
+                        <div class="cc-title">請輸入超商店家
+                        </div>
+                        <input type="text" class="input cc-txt "  />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pymt-radio">
+
+            <div class="row-payment-method payment-row-last">
+                <div class="select-icon hr">
+                    <input type="radio" id="radio1" name="radios" value="宅配" checked>
+                    <label for="radio1"></label>
+                </div>
+                <div class="select-txt hr">
+                    <p class="pymt-type-name">宅配</p>
+                    <p class="pymt-type-desc">貨品將直接送至購買者手上</p>
+                </div>
+                <div class="select-logo">
+                    <div class="select-logo-sub logo-spacer">
+                        <img src="https://img.icons8.com/color/48/000000/truck--v1.png" alt="宅配"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-cc">
+                <div class="row-cc">
+                    <div class="cc-field">
+
+                        <div class="cc-title">請輸入地址
+                        </div>
+                        <input type="text" class="input cc-txt "  />
+                    </div>
+                </div>
+            </div>
+
+            <p></p>
+    </section>
+
+    <section id="content4" class="tab-content">
+        <h3>選擇您的付款方式</h3>
+        <form action="" method="post">
+            <div class="pymt-radio">
+
+
+                <div class="row-payment-method payment-row">
+                    <div class="select-icon">
+                        <input type="radio" id="radio2" name="radios1" value="現金付款">
+                        <label for="radio2"></label>
+                    </div>
+                    <div class="select-txt">
+                        <p class="pymt-type-name">現金付款</p>
+                        <p class="pymt-type-desc">貨到再使用現金付款</p>
+                    </div>
+                    <div class="select-logo">
+                        <img src="https://img.icons8.com/color/48/000000/cash-.png" alt="現金"/>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="pymt-radio">
+
+                <div class="row-payment-method payment-row-last">
+                    <div class="select-icon hr">
+                        <input type="radio" id="radio3" name="radios1" value="信用卡付款" checked>
+                        <label for="radio3"></label>
+                    </div>
+                    <div class="select-txt hr">
+                        <p class="pymt-type-name">信用卡付款</p>
+                        <p class="pymt-type-desc">有Visa跟MasterCard可以選擇</p>
+                    </div>
+                    <div class="select-logo">
+                        <div class="select-logo-sub logo-spacer">
+                            <img src="https://www.dropbox.com/s/by52qpmkmcro92l/logo-visa.png?raw=1" alt="Visa"/>
+                        </div>
+                        <div class="select-logo-sub">
+                            <img src="https://www.dropbox.com/s/6f5dorw54xomw7p/logo-mastercard.png?raw=1" alt="MasterCard"/></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-cc">
+                <div class="row-cc">
+                    <div class="cc-field">
+                        <div class="cc-title">發卡行識別碼
+                        </div>
+                        <input type="text" class="input cc-txt "  />
+                    </div>
+                </div>
+                <div class="row-cc">
+                    <div class="cc-field">
+                        <div class="cc-title">到期日
+                        </div>
+                        <select class="input cc-ddl">
+                            <option selected>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        <select class="input cc-ddl">
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option selected>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                        </select>
+                    </div>
+                    <div class="cc-field">
+                        <div class="cc-title">信用卡安全碼<span class="numberCircle">?</span>
+                        </div>
+                        <input type="text" class="input cc-txt"/>
+                    </div>
+                </div>
+                <div class="row-cc">
+                    <div class="cc-field">
+                        <div class="cc-title">持卡人簽名
+                        </div>
+                        <input type="text" class="input cc-txt"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="button-master-container">
+                <div class="button-container"><a href="#">返回選擇運送方式</a>
+                </div>
+                <div class="button-container button-finish" ><a type="button" id="send_button">結帳</a>
+                </div>
+        </form>
+    </section>
+</div>
+<!--<div class="container">
+    <h1 class="mt-3">Langer Shop</h1>
+
+    <div class="mt-3 row" id="shopcarList">
+    </div>
+</div>
+<form class="d-flex">
+    <select name="select" id="pay">
+        <option >請選擇你的付款方式</option>
+        <option id="1">信用卡付款</option>
+        <option id="2">現金付款</option>
+
+    </select>
+    <select name="select" id="pay1">
+        <option>請選擇你的運送方式</option>
+        <option id="3">宅配</option>
+        <option id="4">超商自取</option>
+    </select>
+    <button onclick="tocar()" class="btn btn-outline-success" type="button" id="send_button">Send</button>
+</form>-->
+
+
+
+
+<!-- Optional JavaScript; choose one of the two! -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!-- 若需相容 IE11，要加載 Promise Polyfill-->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<script>
+$(function(){
+   $("#show").html(oneValues());
+    })
+
+    var result;
+    var ary;
+    function oneValues(){
+    var url=window.location.search;
+    if(url.indexOf("?")!=-1)
+    {
+        result = url.substr(url.indexOf("=")+7);
+        //alert(result);
+        ary =result.split('&');
+        //alert(ary[0]);
+        //alert(ary[1]); ary =result.split('&');
+        //alert(ary[0]);
+        //alert(ary[1]);
+    }
+        //return result;
+    }
+    function tohome(){
+    var getval = result;
+    window.location.href="index1.html?valus"+getval;
+    //console.log(getval);
+    }
+
+
+    //console.log(result);
+    function tomember(){
+    var getval = result;
+    window.location.href="MemberCenter.html?valus"+getval;
+    //console.log(getval);
+    }
+
+    function toOrder(){
+    var getval = result;
+    window.location.href="Order.html?valus"+getval;
+    //console.log(getval);
+    }
+
+    function tocar(){
+    //alert("付款成功!");
+    var getval = ary1[0];
+    window.location.href="shopcar.html?valus"+ary[0]+"&"+getval;
+    //console.log(getval);
+    }
+
+    var result;
+    var ary1;
+    var ary;
+    function oneValues(){
+    var url=window.location.search;
+    if(url.indexOf("?")!=-1)
+    {
+        result = url.substr(url.indexOf("=")+7);
+        //alert(result);
+        ary =result.split('&');
+        //alert(ary[0]);
+        //alert(ary[1]);
+        ary1 = ary[1].split('pn');
+        //alert(ary1[0]);
+        //alert(ary1[1]);
+        ary1[1] =decodeURI(ary1[1]);
+        //alert(ary1[1]);
+
+        //ary1[1] =decodeURI(ary1[1]);
+        //alert(ary1[0]);
+        //alert(ary1[1]);
+        //alert(result);
+        //alert(result);
+    }
+        //return result;
+    }
+$('#send_button').click( function(){
+update_stock = 0;
+        pay();
+        update_productstock();
+    });
+    var tableData = JSON.parse(sessionStorage.getItem("tabledata"));
+    var abc=tableData.join(' ');
+    var tableData1 = JSON.parse(sessionStorage.getItem("tabledata1"));
+    var tableData2 = JSON.parse(sessionStorage.getItem("tabledata2"));
+    var abcd=tableData2.join(' ');
+    console.log(abc);
+    console.log(abcd);
+    var NewArrayQuantity = new Array();
+    NewArrayQuantity  = abcd.split(" ");
+    function pay()
+    {
+        $.ajax({
+            // The URL for the request
+            url: "pay",
+
+          data :{
+             account : ary[0],
+             pay : $('input[name=radios]:checked').val(),
+             deliver : $('input[name=radios1]:checked').val(),
+             name :  abc,
+             money :  tableData1,
+             quantity: abcd,
+          },
+            // Whether this is a POST or GET request
+            type: "GET",
+
+            // The type of data we expect back
+            dataType : "text",
+        })
+        .done(function( text ) {
+               let timerInterval
+Swal.fire({
+  title: '付款中!',
+  html: 'Loading... 請耐心等待',
+  timer: 2000,
+  timerProgressBar: true,
+  didOpen: () => {
+    Swal.showLoading()
+    const b = Swal.getHtmlContainer().querySelector('b')
+    timerInterval = setInterval(() => {
+      b.textContent = Swal.getTimerLeft()
+    }, 100)
+  },
+  willClose: () => {
+    clearInterval(timerInterval)
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
+  }Swal.fire({
+                    title: '結帳完成!',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    }).then((result) => {
+                    if(result.isConfirmed) {
+                        tocar();
+                        }
+                    })
+})
+
+
+                //location.href='shopcar.html';
+        })
+        .fail( function(xhr, status, errorThrown) {
+            console.log( "Sorry, there was a problem!" );
+            console.log( "Error: " + errorThrown );
+            console.log( "Status: " + status );
+            console.dir( xhr );
+        })
+    }
+
+
+
+
+      var stockarr =[];
+      //stock = 0;
+      var total = 0;
+    function addInstockByname(products) {
+    stock = 0;
+      for ( let product of products ) {
+           while(stock!=choose)
+           {
+           if(NewArray[stock]==product. name)
+           {
+                  stockarr [stock] = product. instock;
+                  console.log(stock);
+                  console.log(stockarr [stock]);
+                  total +=1;
+                  break ;
+           }
+           stock ++ ;
+           }
+      }
+      }
+
+    var choose = 0;
+    var NewArray = new Array();
+    NewArray = abc.split(" ");
+    while(NewArray[choose]!=null)
+     {
+        choose +=1;
+     }
+
+     var k = 0;
+     $( document ).ready( function() {
+    console.log( "ready!" );
+    emptyProducts();
+    getstock();
+    function getstock()
+    {
+    while(NewArray[k]!=null)
+    {
+      getInstockByProductname();
+      //console.log(NewArray[k]);
+      function getInstockByProductname(targetUrl) {
+      // Using the core $.ajax() method
+      $.ajax({
+          // The URL for the request
+          url: "InstockByProductname",
+
+
+          data: {
+                name : NewArray[k],
+            },
+          // Whether this is a POST or GET request
+          type: "GET",
+
+          // The type of data we expect back
+          dataType : "json",
+      })
+        // Code to run if the request succeeds (is done);
+        // The response is passed to the function
+        .done(function( json ) {
+        //console.log("finish");
+          let products = json;
+          addInstockByname(products);
+        })
+        // Code to run if the request fails; the raw request and
+        // status codes are passed to the function
+        .fail(function( xhr, status, errorThrown ) {
+          console.log( "Sorry, there was a problem!" );
+          console.log( "Error: " + errorThrown );
+          console.log( "Status: " + status );
+          console.dir( xhr );
+        })
+        // Code to run regardless of success or failure;
+        .always(function( xhr, status ) {
+          console.log( "The request is complete!" );
+        });
+    }
+       // console.log(NewArray[k]);
+       // console.log(k);
+        k++;
+    }
+}
+    //getCountProduct();
+  });
+
+  function emptyProducts() {
+      $('#productList').empty();
+    }
+
+
+
+    function update_productstock()
+    {
+    while(update_stock != choose)
+    {
+         updatestock();
+         function updatestock() {
+      // Using the core $.ajax() method
+      $.ajax({
+          // The URL for the request
+          url: "updatestock",
+
+          // Whether this is a POST or GET request
+          type: "GET",
+
+            data :{
+             name : NewArray[update_stock],
+             stock : stockarr[update_stock] - NewArrayQuantity[update_stock],
+          },
+          dataType : "text",
+      })
+        // Code to run if the request succeeds (is done);
+        // The response is passed to the function
+        .done(function( text ) {
+          console.log("success");
+          //alert("修改成功");
+          //location.href='index2.html';
+        })
+        // Code to run if the request fails; the raw request and
+        // status codes are passed to the function
+        .fail(function( xhr, status, errorThrown ) {
+          console.log( "Sorry, there was a problem!" );
+          console.log( "Error: " + errorThrown );
+          console.log( "Status: " + status );
+          console.dir( xhr );
+        })
+        // Code to run regardless of success or failure;
+        .always(function( xhr, status ) {
+          console.log( "The request is complete!" );
+        });
+    }
+    update_stock++;
+    }
+    }
+</script>
+</body>
+</html>
